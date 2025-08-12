@@ -3,7 +3,8 @@ import React from 'react'
 
 export const Contactus = (props) => {
   return(
-    <div>Contactus</div>
+    <div>Contactus<br />
+    Prudhvi</div>
    )
 
  }
