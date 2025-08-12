@@ -7,6 +7,7 @@ import { About } from './pages/About';
 import { CaseStudies } from './pages/CaseStudies';
 import { Testimonials } from './pages/Testimonial';
 import { Teams } from './pages/Team/Teams';
+import { Contactus } from './pages/Contact';
 
 const AppRoutes = () => {
   return (
@@ -17,6 +18,7 @@ const AppRoutes = () => {
         <Route path='/casestudies' element={<CaseStudies/>}/>
         <Route path='/testimonial' element={<Testimonials/>}/>
         <Route path='/team' element={<Teams/>}/>
+        <Route path='/contact' element={<Contactus/>}/>
       </Routes>
     </Router>
   );
