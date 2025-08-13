@@ -1,11 +1,49 @@
 import HeroSection from '@/components/common/HeroSection';
-import React from 'react';
+import { useRef, useEffect, useState } from 'react';
 import founder from '/images/founder.svg';
 import underlineImage from '/images/img_vector_3.svg';
 import { Banner } from '@/components/common/Banner';
 import { Footer } from '@/components/common/Footer';
 
 export const About = () => {
+  const [progress, setProgress] = useState(0);
+  const timelineRef = useRef(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!timelineRef.current) return;
+
+      const rect = timelineRef.current.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+
+      // Calculate scroll progress within the timeline
+      const start = windowHeight / 3;
+      const end = rect.height - windowHeight / 3;
+
+      const scrollY = Math.min(Math.max(start - rect.top, 0), end);
+      const percentage = scrollY / end;
+
+      setProgress(Math.max(0, Math.min(percentage, 1)));
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Run once on load
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const milestones = [
+    {
+      year: '2010',
+      text: 'Began delivering IT services from Hyderabad with U.S. clients.',
+    },
+    { year: '2018-2021', text: 'Launched Neodrafts and PixelRevs' },
+    { year: '2020-2023', text: 'Deployed 9 SaaS platforms.' },
+    {
+      year: '2025',
+      text: 'Global tech hub, 80+ experts, offices in Hyderabad & Las Vegas.',
+    },
+  ];
   return (
     <div>
       {/* Hero Section */}
@@ -99,7 +137,17 @@ Our mission? To create one million jobs.`}
       <section>
         <div className="min-h-screen flex flex-col items-center py-12 px-4 bg-[#1D1D1D]">
           {/* Header */}
-          <div className="rounded-2xl px-4 sm:px-8 py-6 mb-12 text-center">
+          <div className="relative rounded-2xl px-4 sm:px-8 py-6 mb-12 text-center group">
+            {/* Left bottom border */}
+            <div className="absolute bottom-0 left-0 w-1/2 h-[2px] bg-[#D9D9D9] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
+            {/* Left vertical border */}
+            <div className="absolute bottom-0 left-0 w-[3px] h-1/3 bg-[#D9D9D9] scale-y-0 group-hover:scale-y-100 transition-transform duration-500 origin-bottom"></div>
+
+            {/* Right bottom border */}
+            <div className="absolute bottom-0 right-0 w-1/2 h-[2px] bg-[#D9D9D9] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-right"></div>
+            {/* Right vertical border */}
+            <div className="absolute bottom-0 right-0 w-[3px] h-1/3 bg-[#D9D9D9] scale-y-0 group-hover:scale-y-100 transition-transform duration-500 origin-bottom"></div>
+
             <h1 className="text-[#EBEBEB] font-anton text-[40px] sm:text-[60px] lg:text-[80px] font-bold tracking-wider">
               OUR JOURNEY
               <img
@@ -114,103 +162,68 @@ Our mission? To create one million jobs.`}
           </div>
 
           {/* Timeline */}
-          <div className="relative font-anton w-full max-w-6xl">
-            {/* Vertical Line */}
+          <div ref={timelineRef} className="relative font-anton w-full max-w-6xl pb-20">
+            {/* Base Line */}
             <div className="absolute left-1/2 transform -translate-x-1/2 w-[2px] h-full bg-white"></div>
+
+            {/* Progress Line */}
+            <div
+              style={{ height: `${progress * 100}%` }}
+              className="absolute left-1/2 transform -translate-x-1/2 w-[4px] bg-green-400 transition-all duration-[50ms]"
+            ></div>
 
             {/* Timeline Items */}
             <div className="space-y-16">
-              {/* 2010 */}
-              <div className="relative flex items-center justify-between w-full">
-                {/* Left */}
-                <div className="w-[45%] pr-4 text-right">
-                  <h2 className="text-white text-[32px] sm:text-[40px] lg:text-[50px] font-bold mb-2">
-                    2010
-                  </h2>
+              {milestones.map((item, index) => (
+                <div key={index} className="relative flex items-center justify-between w-full">
+                  {/* Left */}
+                  {index % 2 === 0 ? (
+                    <div className="w-[45%] pr-4 text-right">
+                      <h2 className="text-white text-[32px] sm:text-[40px] lg:text-[50px] font-bold mb-2">
+                        {item.year}
+                      </h2>
+                    </div>
+                  ) : (
+                    <div className="w-[45%] pr-4 font-dm-sans text-right">
+                      <p className="text-[#6D7769] text-[14px] sm:text-[18px] lg:text-[22px] leading-relaxed">
+                        {item.text}
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Dot */}
+                  <div
+                    className={`absolute left-1/2 transform -translate-x-1/2 w-4 h-4 rounded-full border-2 border-gray-900 ${
+                      progress >= index / (milestones.length - 1) ? 'bg-green-400' : 'bg-gray-500'
+                    }`}
+                  ></div>
+
+                  {/* Right */}
+                  {index % 2 === 0 ? (
+                    <div className="w-[45%] pl-4 font-dm-sans">
+                      <p className="text-[#6D7769] text-[14px] sm:text-[18px] lg:text-[22px] leading-relaxed">
+                        {item.text}
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="w-[45%] pl-4">
+                      <h2 className="text-white text-[32px] sm:text-[40px] lg:text-[50px] font-bold mb-2">
+                        {item.year}
+                      </h2>
+                    </div>
+                  )}
                 </div>
-
-                {/* Dot */}
-                <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-green-400 rounded-full border-2 border-gray-900"></div>
-
-                {/* Right */}
-                <div className="w-[45%] pl-4 font-dm-sans">
-                  <p className="text-[#6D7769] text-[14px] sm:text-[18px] lg:text-[22px] leading-relaxed">
-                    Began delivering IT services from Hyderabad with U.S. clients.
-                  </p>
-                </div>
-              </div>
-
-              {/* 2018-2021 */}
-              <div className="relative flex items-center justify-between w-full">
-                {/* Left */}
-                <div className="w-[45%] pr-4 font-dm-sans text-right">
-                  <p className="text-[#6D7769] text-[14px] sm:text-[18px] lg:text-[22px] leading-relaxed">
-                    Launched Neodrafts and PixelRevs
-                  </p>
-                </div>
-
-                {/* Dot */}
-                <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-green-400 rounded-full border-2 border-gray-900"></div>
-
-                {/* Right */}
-                <div className="w-[45%] pl-4">
-                  <h2 className="text-white text-[32px] sm:text-[40px] lg:text-[50px] font-bold mb-2">
-                    2018-2021
-                  </h2>
-                </div>
-              </div>
-
-              {/* 2020-2023 */}
-              <div className="relative flex items-center justify-between w-full">
-                {/* Left */}
-                <div className="w-[45%] pr-4 text-right">
-                  <h2 className="text-white text-[32px] sm:text-[40px] lg:text-[50px] font-bold mb-2">
-                    2020-2023
-                  </h2>
-                </div>
-
-                {/* Dot */}
-                <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-green-400 rounded-full border-2 border-gray-900"></div>
-
-                {/* Right */}
-                <div className="w-[45%] pl-4 font-dm-sans">
-                  <p className="text-[#6D7769] text-[14px] sm:text-[18px] lg:text-[22px] leading-relaxed">
-                    Deployed 9 SaaS platforms.
-                  </p>
-                </div>
-              </div>
-
-              {/* 2025 */}
-              <div className="relative flex items-center justify-between w-full">
-                {/* Left */}
-                <div className="w-[45%] pr-4 font-dm-sans text-right">
-                  <p className="text-[#6D7769] text-[14px] sm:text-[18px] lg:text-[22px] leading-relaxed">
-                    Global tech hub, 80+ experts, offices in Hyderabad & Las Vegas.
-                  </p>
-                </div>
-
-                {/* Dot */}
-                <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-green-400 rounded-full border-2 border-gray-900"></div>
-
-                {/* Right */}
-                <div className="w-[45%] pl-4">
-                  <h2 className="text-white text-[32px] sm:text-[40px] lg:text-[50px] font-bold mb-2">
-                    2025
-                  </h2>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>
       </section>
-
-      <section className="w-full bg-white py-12">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center px-6">
+      <section className="w-full max-w-[1102px] mx-auto px-4 sm:px-6 lg:px-8 ">
+        <div className=" mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center mt-8">
           {/* Left Side - Text */}
           <div>
-            <h2 className=" text-[50px] lg:text-[80px]  font-anton leading-tight">
+            <h2 className=" text-[40px] lg:text-[70px]  font-anton leading-tight">
               OUR MISSION:
-              
               <span>BEYOND PROFITS</span>
             </h2>
             <p className="font-dm-sans text-[#6D7769] text-[20px] mt-4 max-w-md">

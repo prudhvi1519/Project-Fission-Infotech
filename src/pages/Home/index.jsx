@@ -127,6 +127,7 @@ const Home = () => {
               title: 'Core IT Services ',
               icon: '/images/img_code.svg',
               bgColor: 'bg-global-4',
+              height: 'md:h-[300px]  h-[30%px]',
               layoutClass: 'lg:w-[36%] lg:mt-[80px]',
             },
             {
@@ -134,12 +135,14 @@ const Home = () => {
               icon: '/images/img_artificial_intelligence.svg',
               bgColor: 'bg-global-3',
               textColor: 'text-white',
+              height: 'md:h-[300px] h:[70px] ',
               layoutClass: 'sm:w-[350px] h-[300px]',
             },
             {
               title: 'Design & Experience Services',
               icon: '/images/img_ui_design.svg',
               bgColor: 'bg-global-8',
+              height: 'lg:h-[300px] md:h-[300px] h-[100%]',
               layoutClass: 'sm:w-[350px] lg:mt-[20px] h-[350px]',
             },
           ]}
@@ -167,7 +170,7 @@ const Home = () => {
                   We have driven innovation and solved complex challenges across a range of
                   industries.
                 </p>
-                <div className="flex items-center gap-3 md:gap-5">
+                <div className="flex items-center justify-end  gap-3 md:gap-5">
                   <img
                     src="/images/img_vector_gray_900.svg"
                     alt="Previous"
@@ -183,7 +186,7 @@ const Home = () => {
             </div>
 
             {/* Cards */}
-            <div className="flex flex-col sm:flex-row flex-wrap justify-center items-center gap-6 md:gap-10 mt-6 md:mt-10">
+            <div className="flex flex-col sm:flex-row flex-wrap  items-center gap-6 md:gap-[60px] mt-6 md:mt-10">
               {[
                 {
                   img: '/images/img_rectangle_18.png',
@@ -228,13 +231,7 @@ const Home = () => {
         </div>
 
         {/* Side Image */}
-        <div className="absolute right-0 bottom-0 w-[100px] sm:w-[150px] md:w-[200px] lg:w-[264px]">
-          <img
-            src="/images/img_mask_group.png"
-            alt="Decorative"
-            className="w-full h-auto object-cover"
-          />
-        </div>
+        
       </section>
 
       {/* Our Approach & Process Section */}
@@ -284,7 +281,7 @@ const Home = () => {
                 {stepsData.map((step) => (
                   <div key={step.id} className="mb-[9px] md:mb-[18px]">
                     {/* Step Row */}
-                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-[10px] sm:gap-0">
+                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-[10px] sm:gap-0">
                       {/* Left Side for Mobile: Number + Title */}
                       <div className="flex w-full items-center justify-between sm:justify-start sm:gap-[12px] md:gap-[20px]">
                         <div className="flex items-center gap-[8px] sm:gap-[12px] md:gap-[20px]">
@@ -308,20 +305,30 @@ const Home = () => {
                         </button>
                       </div>
 
-                      {/* Desktop Toggle Button */}
-                      <button
-                        onClick={() => setOpenStep(openStep === step.id ? null : step.id)}
-                        className="hidden sm:flex items-center justify-center w-[35px] h-[35px] md:w-[50px] md:h-[50px] rounded-full border border-global-10 text-global-10 hover:bg-global-10 hover:text-global-1 transition"
-                      >
-                        <span className="text-xl md:text-2xl font-bold">
-                          {openStep === step.id ? '−' : '+'}
-                        </span>
-                      </button>
+                      {/* Desktop: Description + Toggle Button */}
+                      <div className="hidden sm:flex items-start gap-[12px] md:gap-[20px] w-full sm:w-auto">
+                        {/* Description for Desktop */}
+                        {openStep === step.id && (
+                          <p className="text-[14px] sm:text-[16px] md:text-[18px] font-dm-sans font-normal leading-[20px] sm:leading-[23px] md:leading-[26px] text-global-4 max-w-[400px] md:max-w-[500px]">
+                            {step.description}
+                          </p>
+                        )}
+
+                        {/* Desktop Toggle Button */}
+                        <button
+                          onClick={() => setOpenStep(openStep === step.id ? null : step.id)}
+                          className="flex items-center justify-center w-[35px] h-[35px] md:w-[50px] md:h-[50px] rounded-full border border-global-10 text-global-10 hover:bg-global-10 hover:text-global-1 transition flex-shrink-0"
+                        >
+                          <span className="text-xl md:text-2xl font-bold">
+                            {openStep === step.id ? '−' : '+'}
+                          </span>
+                        </button>
+                      </div>
                     </div>
 
-                    {/* Description */}
+                    {/* Mobile Description */}
                     {openStep === step.id && (
-                      <p className="mt-[6px] sm:mt-0 text-[14px] sm:text-[16px] md:text-[18px] font-dm-sans font-normal leading-[20px] sm:leading-[23px] md:leading-[26px] text-global-4">
+                      <p className="mt-[6px] sm:hidden text-[14px] font-dm-sans font-normal leading-[20px] text-global-4 ml-8">
                         {step.description}
                       </p>
                     )}
@@ -388,15 +395,15 @@ const Home = () => {
                   <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent rounded-[40px]" />
 
                   {/* Green Box at Bottom Left */}
-                  <div className="absolute left-4 sm:left-6 md:left-[-50px] bottom-4 sm:bottom-6 bg-gradient-to-r from-white to-[#a1f480] rounded-[20px] p-3 sm:p-4 md:p-5 shadow-[4px_4px_15px_#4bc31c66] border border-transparent max-w-[90%] sm:max-w-[75%]">
-                    <p className="text-[14px] sm:text-[16px] md:text-[20px] font-anton uppercase text-global-1 leading-tight">
+                  <div className="absolute left-4 sm:left-6  lg:left-[-150px]  bottom-4 sm:bottom-6 bg-gradient-to-r from-white to-[#a1f480] rounded-[20px] p-3 sm:p-4 md:p-5 shadow-[4px_4px_15px_#4bc31c66] border border-transparent max-w-[90%] sm:max-w-[75%]">
+                    <p className="text-[14px]  sm:text-[16px] md:text-[20px] font-anton uppercase text-global-1 leading-tight">
                       Achieved 99.99% uptime, 2x faster load times, 40% cost savings.
                     </p>
                   </div>
                 </div>
 
                 {/* Text Box on Upper Right */}
-                <div className="flex flex-col gap-2 md:gap-3 w-full lg:w-[40%] mt-4 lg:mt-0">
+                <div className="flex flex-col gap-2 md:gap-3 w-full lg:w-[25%] mt-4 lg:mt-0">
                   <h3 className="text-[18px] sm:text-[22px] md:text-[30px] font-anton uppercase text-global-1 leading-tight">
                     Building a Scalable Healthcare Platform
                   </h3>
@@ -404,7 +411,8 @@ const Home = () => {
                   <p className="text-[14px] sm:text-[16px] md:text-[20px] font-dm-sans italic text-global-3 leading-snug">
                     <span className="font-light">How Fission's cloud expertise helped </span>
                     <span className="font-bold">
-                      How Fission’s cloud expertise helped HealthCo handle 5× user growth without a glitch, while improving UX.
+                      How Fission’s cloud expertise helped HealthCo handle 5× user growth without a
+                      glitch, while improving UX.
                     </span>
                   </p>
                 </div>

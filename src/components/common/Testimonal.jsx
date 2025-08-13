@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+import { motion } from 'framer-motion';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -7,6 +9,8 @@ import left from '../../../public/images/leftarrow.svg';
 import right from '../../../public/images/rightarrow.svg';
 
 export default function TestimonialsSection() {
+  const [activeIndex, setActiveIndex] = useState(0);
+
   const testimonials = [
     {
       title: "Fission's team felt like an extension of our own.",
@@ -57,37 +61,49 @@ export default function TestimonialsSection() {
               </h2>
             </div>
 
-            {/* Swiper Slider */}
+            {/* Slider */}
             <div className="relative w-full mt-[30px] sm:mt-[40px]">
-              {/* Left arrow */}
-              <div className="custom-prev w-[32px] sm:w-[40px] h-[32px] sm:h-[40px] absolute left-[0] sm:-left-[50px] top-1/2 -translate-y-1/2 z-10 cursor-pointer bg-white/10 rounded-full flex items-center justify-center">
-                <img src={left} alt="Prev" className="w-[24px] sm:w-[24px]" />
-              </div>
-
-              {/* Right arrow */}
-              <div className="custom-next w-[32px] sm:w-[40px] h-[32px] sm:h-[40px] absolute right-[0] sm:-right-[50px] top-1/2 -translate-y-1/2 z-10 cursor-pointer bg-white/10 rounded-full flex items-center justify-center">
-                <img src={right} alt="Next" className="w-[24px] sm:w-[24px]" />
+              {/* Desktop arrows inside */}
+              <div className="hidden lg:block">
+                <div className="custom-prev w-[32px] sm:w-[40px] h-[32px] sm:h-[40px] absolute left-[0] sm:-left-[50px] top-1/2 -translate-y-1/2 z-10 cursor-pointer bg-white/10 rounded-full flex items-center justify-center">
+                  <img src={left} alt="Prev" className="w-[24px] sm:w-[24px]" />
+                </div>
+                <div className="custom-next w-[32px] sm:w-[40px] h-[32px] sm:h-[40px] absolute right-[0] sm:-right-[50px] top-1/2 -translate-y-1/2 z-10 cursor-pointer bg-white/10 rounded-full flex items-center justify-center">
+                  <img src={right} alt="Next" className="w-[24px] sm:w-[24px]" />
+                </div>
               </div>
 
               <Swiper
                 modules={[Navigation, Pagination, Autoplay]}
                 spaceBetween={16}
                 slidesPerView={1}
+                loop={true}
+                centeredSlides={true}
                 navigation={{
                   nextEl: '.custom-next',
                   prevEl: '.custom-prev',
                 }}
                 autoplay={{ delay: 5000 }}
+                onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
                 breakpoints={{
-                  640: { slidesPerView: 1.2, spaceBetween: 20 },
-                  768: { slidesPerView: 1.5, spaceBetween: 24 },
-                  1024: { slidesPerView: 2, spaceBetween: 30 },
+                  640: { slidesPerView: 1, spaceBetween: 20, centeredSlides: true },
+                  768: { slidesPerView: 1, spaceBetween: 24, centeredSlides: true },
+                  1024: { slidesPerView: 2, spaceBetween: 30, centeredSlides: false },
                 }}
                 className="w-full"
               >
                 {testimonials.map((t, i) => (
                   <SwiperSlide key={i}>
-                    <div className="bg-global-8 rounded-[16px] sm:rounded-[20px] p-[16px] sm:p-[24px] md:p-[40px] h-full flex flex-col justify-between min-h-[300px] sm:min-h-[350px]">
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                      animate={
+                        activeIndex === i
+                          ? { opacity: 1, scale: 1, y: 0 }
+                          : { opacity: 0.5, scale: 0.95 }
+                      }
+                      transition={{ duration: 0.6, ease: 'easeOut' }}
+                      className="bg-global-8 rounded-[16px] sm:rounded-[20px] p-[16px] sm:p-[24px] md:p-[40px] h-full flex flex-col justify-between min-h-[300px] sm:min-h-[350px]"
+                    >
                       <div className="flex flex-col gap-[8px] sm:gap-[12px] md:gap-[20px] flex-grow">
                         <div className="flex flex-col gap-[4px] sm:gap-[8px] items-start">
                           <div className="w-[12px] sm:w-[20px] md:w-[26px] h-[2px] bg-global-1"></div>
@@ -110,10 +126,20 @@ export default function TestimonialsSection() {
                           className="w-[32px] sm:w-[54px] md:w-[72px] h-auto"
                         />
                       </div>
-                    </div>
+                    </motion.div>
                   </SwiperSlide>
                 ))}
               </Swiper>
+
+              {/* Mobile & tablet buttons */}
+              <div className="flex lg:hidden justify-center gap-4 mt-4">
+                <div className="custom-prev w-[40px] h-[40px] bg-white/10 rounded-full flex items-center justify-center cursor-pointer">
+                  <img src={left} alt="Prev" className="w-[24px]" />
+                </div>
+                <div className="custom-next w-[40px] h-[40px] bg-white/10 rounded-full flex items-center justify-center cursor-pointer">
+                  <img src={right} alt="Next" className="w-[24px]" />
+                </div>
+              </div>
             </div>
           </div>
         </div>

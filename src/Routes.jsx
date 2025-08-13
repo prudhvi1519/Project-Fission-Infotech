@@ -8,6 +8,7 @@ import { CaseStudies } from './pages/CaseStudies';
 import { Testimonials } from './pages/Testimonial';
 import { Teams } from './pages/Team/Teams';
 import { Contactus } from './pages/Contact';
+import Services from './pages/Services';
 
 const AppRoutes = () => {
   return (
@@ -19,6 +20,7 @@ const AppRoutes = () => {
         <Route path='/testimonial' element={<Testimonials/>}/>
         <Route path='/team' element={<Teams/>}/>
         <Route path='/contact' element={<Contactus/>}/>
+        <Route path='/service' element={<Services/>}/>
       </Routes>
     </Router>
   );
