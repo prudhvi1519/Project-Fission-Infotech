@@ -39,7 +39,7 @@ export const Footer = (props) => {
               </h3>
 
               {/* Logo Strip */}
-              <div className="flex items-center gap-[7px] sm:gap-[11px] md:gap-[14px] w-full">
+              <div className="flex items-center gap-[7px] sm:gap-[11px] md:gap-[14px] w-fullml-2">
                 <img
                   src="/images/img_vector_light_green_300.svg"
                   alt="Logo"

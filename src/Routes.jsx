@@ -21,6 +21,7 @@ const AppRoutes = () => {
         <Route path='/testimonial' element={<Testimonials/>}/>
         <Route path='/team' element={<Teams/>}/>
         <Route path='/contact' element={<Contactus/>}/>
+        <Route path='/service' element={<Services/>}/>
       </Routes>
     </Router>
   );
